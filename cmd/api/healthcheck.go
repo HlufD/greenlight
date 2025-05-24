@@ -15,11 +15,12 @@ func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 	*/
 
 	// using json.marshal()
-	data := map[string]string{
+	data := envelop{
 		"status":      "Available",
 		"environment": app.config.env,
 		"version":     version,
 	}
+
 	err := app.writeJson(w, 200, data, nil)
 
 	if err != nil {
