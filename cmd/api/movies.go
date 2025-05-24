@@ -16,7 +16,7 @@ func (app *Application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 	// get the id from  the path
 	id, err := app.readParamId(r)
 	if err != nil || id < 1 {
-		http.NotFound(w, r)
+		app.notFoundResponse(w, r)
 		return
 	}
 
@@ -34,8 +34,9 @@ func (app *Application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 	err = app.writeJson(w, 200, envelop{"movie": movie}, nil)
 
 	if err != nil {
-		app.logger.Println(err)
-		http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
+		// app.logger.Println(err)
+		// http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
 	}
 
 }
