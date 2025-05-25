@@ -9,7 +9,23 @@ import (
 )
 
 func (app *Application) createMovieHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "movie created")
+
+	var input struct {
+		Title   string   `json:"title"`
+		Runtime int32    `json:"runtime"`
+		Year    int      `json:"year"`
+		Genres  []string `json:"genres"`
+	}
+
+	err := app.readJSON(w, r, &input)
+
+	if err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	// Dump the contents of the input struct in a HTTP response.
+	fmt.Fprintf(w, "%+v\n", input)
 }
 
 func (app *Application) showMovieHandler(w http.ResponseWriter, r *http.Request) {
