@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// this is a version
 const version = "1.0.0"
 
 // this is config for the app ,like port and environment
